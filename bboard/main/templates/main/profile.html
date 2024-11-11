@@ -1,0 +1,23 @@
+{% extends "layout/basic.html" %}
+{% load bootstrap4 %}
+{% block title %} Профиль пользователя {% endblock %}
+{% block content %}
+    <h2>Профиль пользователя {{ user.username }}</h2>
+    {% if user.first_name and user.last_name %}
+        <p>Здравствуйте, {{ user.first_name }} {{ user.last_name }} </p>
+    {% endif %}
+
+    <h3>Ваши объявления</h3>
+    <p><a href="{% url 'main:profile_bb_add' %}">Добавить объявление</a></p>
+    <ul>
+        {% for bb in bbs %}
+            <li>
+                {{ bb.title }} - {{ bb.created_at }}
+                <a href="{% url 'main:profile_bb_change' bb.pk %}">Редактировать</a> |
+                <a href="{% url 'main:profile_bb_delete' bb.pk %}">Удалить</a>
+            </li>
+        {% empty %}
+            <li>У вас нет объявлений.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
